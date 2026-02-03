@@ -31,3 +31,7 @@ export { createNoopStore } from "./store/noop.js";
 
 // Executor implementations
 export { createSequentialExecutor } from "./executor/sequential.js";
+
+// Sources
+export { createFileWatcherSource } from "./sources/file-watcher.js";
+export type { FileEvent, FileEventType, FileWatcherOptions } from "./sources/file-watcher.js";

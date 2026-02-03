@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { createSignalBus } from "./bus.js";
-import type { BaseSignal, DefineSignals } from "./types.js";
+import type { BaseSignal, DefineSignals, SignalStore } from "./types.js";
 
 // Test signal types
 type TestSignals = DefineSignals<{
@@ -360,6 +360,48 @@ describe("SignalBus", () => {
 
       // Sequential: first handler completes before second starts
       expect(order).toEqual([1, 2]);
+    });
+  });
+
+  describe("replay", () => {
+    it("replays unacknowledged signals from store", async () => {
+      const unackedSignals: TestSignals[] = [
+        createTestSignal("user.created", { userId: "1", email: "a@example.com" }),
+        createTestSignal("order.placed", { orderId: "2", total: 50 }),
+      ];
+      const ackedIds: string[] = [];
+
+      const mockStore: SignalStore<TestSignals> = {
+        save: vi.fn(),
+        markAcked: vi.fn((id) => {
+          ackedIds.push(id);
+          return Promise.resolve();
+        }),
+        getUnacked: vi.fn(() => Promise.resolve(unackedSignals)),
+      };
+
+      const bus = createSignalBus<TestSignals>({ store: mockStore });
+      const handler = vi.fn();
+      bus.onAny(handler);
+
+      const replayed = await bus.replay();
+
+      expect(replayed).toBe(2);
+      expect(handler).toHaveBeenCalledTimes(2);
+      expect(ackedIds).toEqual([unackedSignals[0]!.id, unackedSignals[1]!.id]);
+    });
+
+    it("returns 0 when no unacked signals", async () => {
+      const mockStore: SignalStore<TestSignals> = {
+        save: vi.fn(),
+        markAcked: vi.fn(),
+        getUnacked: vi.fn(() => Promise.resolve([])),
+      };
+
+      const bus = createSignalBus<TestSignals>({ store: mockStore });
+      const replayed = await bus.replay();
+
+      expect(replayed).toBe(0);
     });
   });
 });
