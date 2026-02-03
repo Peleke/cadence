@@ -1,0 +1,48 @@
+{
+  "name": "@pelekes/cadence",
+  "version": "0.1.0",
+  "description": "Typed event infrastructure for ambient AI agency",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "lint": "oxlint src",
+    "format": "oxfmt src",
+    "prepublishOnly": "pnpm build"
+  },
+  "keywords": [
+    "events",
+    "signals",
+    "pub-sub",
+    "agent",
+    "ai",
+    "ambient"
+  ],
+  "author": "Peleke Sengstacke",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "oxlint": "^0.16.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  },
+  "dependencies": {
+    "chokidar": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
