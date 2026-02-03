@@ -27,3 +27,11 @@
 - Build for sophisticated, implement simple
 - No domain-specific concepts in core — this is infrastructure
 - Consumers (OpenClaw, MindMirror) define their own signal types
+
+## Build Journal
+
+After completing significant work (features, debugging sessions, deployments,
+2+ hour focused sessions), write a build journal entry.
+
+**Location:** `buildlog/YYYY-MM-DD-{slug}.md`
+**Template:** `buildlog/_TEMPLATE.md`
