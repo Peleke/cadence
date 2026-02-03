@@ -62,7 +62,12 @@ export function createFileWatcherSource<S extends BaseSignal>(
     const signal = toSignal(event);
 
     if (signal) {
-      await emitFn(signal);
+      try {
+        await emitFn(signal);
+      } catch {
+        // Emit errors are handled by the bus, not the source
+        // Swallow here to prevent watcher crash
+      }
     }
   };
 

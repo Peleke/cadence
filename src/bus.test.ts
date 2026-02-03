@@ -195,6 +195,19 @@ describe("SignalBus", () => {
         "mw1-after",
       ]);
     });
+
+    it("propagates middleware errors to caller", async () => {
+      const bus = createSignalBus<TestSignals>();
+      const error = new Error("middleware boom");
+
+      bus.use(async () => {
+        throw error;
+      });
+
+      await expect(
+        bus.emit(createTestSignal("user.created", { userId: "123", email: "test@example.com" })),
+      ).rejects.toThrow(error);
+    });
   });
 
   describe("error handling", () => {
@@ -360,6 +373,28 @@ describe("SignalBus", () => {
 
       // Sequential: first handler completes before second starts
       expect(order).toEqual([1, 2]);
+    });
+
+    it("handles concurrent emit calls correctly", async () => {
+      const bus = createSignalBus<TestSignals>();
+      const received: string[] = [];
+
+      bus.on("user.created", async (signal) => {
+        await new Promise((r) => setTimeout(r, 5));
+        received.push(signal.payload.userId);
+      });
+
+      // Emit multiple signals concurrently
+      await Promise.all([
+        bus.emit(createTestSignal("user.created", { userId: "1", email: "a@test.com" })),
+        bus.emit(createTestSignal("user.created", { userId: "2", email: "b@test.com" })),
+        bus.emit(createTestSignal("user.created", { userId: "3", email: "c@test.com" })),
+      ]);
+
+      expect(received).toHaveLength(3);
+      expect(received).toContain("1");
+      expect(received).toContain("2");
+      expect(received).toContain("3");
     });
   });
 
