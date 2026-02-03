@@ -1,5 +1,5 @@
 {
-  "name": "@pelekes/cadence",
+  "name": "@peleke.s/cadence",
   "version": "0.1.0",
   "description": "Typed event infrastructure for ambient AI agency",
   "type": "module",
