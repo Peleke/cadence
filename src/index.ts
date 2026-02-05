@@ -50,3 +50,7 @@ export type {
 } from "./clock/types.js";
 
 export { createIntervalClock } from "./clock/interval.js";
+export { createTestClock } from "./clock/test-clock.js";
+export type { TestClock } from "./clock/test-clock.js";
+export { createBridgeClock } from "./clock/bridge.js";
+export type { BridgeClock } from "./clock/bridge.js";
