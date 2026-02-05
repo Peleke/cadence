@@ -54,3 +54,5 @@ export { createTestClock } from "./clock/test-clock.js";
 export type { TestClock } from "./clock/test-clock.js";
 export { createBridgeClock } from "./clock/bridge.js";
 export type { BridgeClock } from "./clock/bridge.js";
+export { createClockSource } from "./clock/source.js";
+export type { ClockSourceOptions } from "./clock/source.js";
