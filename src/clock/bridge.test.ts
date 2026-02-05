@@ -47,10 +47,10 @@ describe("createBridgeClock", () => {
 
     it("is a no-op when not running", () => {
       const clock = createBridgeClock();
-      const handler = vi.fn();
-      // Don't start
+      // push before start is a silent no-op
       clock.push();
-      expect(handler).not.toHaveBeenCalled();
+      expect(clock.seq).toBe(0);
+      expect(clock.stats().tickCount).toBe(0);
     });
 
     it("is a no-op after stop", () => {
