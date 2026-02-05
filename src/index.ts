@@ -35,3 +35,18 @@ export { createSequentialExecutor } from "./executor/sequential.js";
 // Sources
 export { createFileWatcherSource } from "./sources/file-watcher.js";
 export type { FileEvent, FileEventType, FileWatcherOptions } from "./sources/file-watcher.js";
+
+export { createCronSource, getNextRun, isValidCronExpr } from "./sources/cron.js";
+export type { CronJob, CronSourceOptions } from "./sources/cron.js";
+
+// Clock primitives
+export type {
+  Tick,
+  TickHandler,
+  BackpressurePolicy,
+  TickStats,
+  Clock,
+  IntervalClockOptions,
+} from "./clock/types.js";
+
+export { createIntervalClock } from "./clock/interval.js";

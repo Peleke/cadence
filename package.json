@@ -41,7 +41,8 @@
     "vitest": "^4.0.18"
   },
   "dependencies": {
-    "chokidar": "^4.0.0"
+    "chokidar": "^4.0.0",
+    "croner": "^9.0.0"
   },
   "engines": {
     "node": ">=22"
