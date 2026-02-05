@@ -1,0 +1,45 @@
+site_name: Cadence
+site_url: https://peleke.github.io/cadence/
+site_description: Typed event infrastructure for ambient AI agency
+repo_url: https://github.com/Peleke/cadence
+repo_name: Peleke/cadence
+
+theme:
+  name: readthedocs
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra_javascript:
+  - https://unpkg.com/mermaid@11/dist/mermaid.min.js
+
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quickstart.md
+    - Core Concepts: getting-started/concepts.md
+  - Guides:
+    - Signal Bus: guides/signal-bus.md
+    - Sources: guides/sources.md
+    - Clock System: guides/clocks.md
+    - Pluggable Layers: guides/pluggable-layers.md
+  - Reference:
+    - Types: reference/types.md
+    - API Exports: reference/exports.md
+  - Changelog: changelog.md
