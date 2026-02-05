@@ -148,7 +148,11 @@ export function createIntervalClock(options: IntervalClockOptions): Clock {
           nextIdealTime += skipped * intervalMs;
         }
       };
-      done();
+      done().catch((err) => {
+        errors++;
+        onError?.(err);
+        busy = false;
+      });
     }, delay);
   }
 
