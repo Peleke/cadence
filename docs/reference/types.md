@@ -53,7 +53,7 @@ type SignalPayload<S extends BaseSignal, T extends S["type"]> =
 Handler for a specific signal type.
 
 ```typescript
-type SignalHandler<S extends BaseSignal, T extends S["type"]> =
+type SignalHandler<S extends BaseSignal, T extends S["type"] = S["type"]> =
   (signal: Extract<S, { type: T }>) => void | Promise<void>;
 ```
 
@@ -96,7 +96,7 @@ interface BusStats {
 ### `SignalBus`
 
 ```typescript
-interface SignalBus<S extends BaseSignal> {
+interface SignalBus<S extends BaseSignal = BaseSignal> {
   emit(signal: S): Promise<void>;
   on<T extends S["type"]>(type: T, handler: SignalHandler<S, T>): () => void;
   onAny(handler: AnySignalHandler<S>): () => void;
@@ -110,7 +110,7 @@ interface SignalBus<S extends BaseSignal> {
 ### `SignalBusOptions`
 
 ```typescript
-interface SignalBusOptions<S extends BaseSignal> {
+interface SignalBusOptions<S extends BaseSignal = BaseSignal> {
   transport?: Transport<S>;
   store?: SignalStore<S>;
   executor?: HandlerExecutor<S>;
@@ -123,7 +123,7 @@ interface SignalBusOptions<S extends BaseSignal> {
 ### `Transport`
 
 ```typescript
-interface Transport<S extends BaseSignal> {
+interface Transport<S extends BaseSignal = BaseSignal> {
   emit(signal: S): Promise<void>;
   subscribe(handler: AnySignalHandler<S>): () => void;
 }
@@ -134,7 +134,7 @@ interface Transport<S extends BaseSignal> {
 ### `SignalStore`
 
 ```typescript
-interface SignalStore<S extends BaseSignal> {
+interface SignalStore<S extends BaseSignal = BaseSignal> {
   save(signal: S): Promise<void>;
   markAcked(signalId: string): Promise<void>;
   getUnacked(): Promise<S[]>;
@@ -146,7 +146,7 @@ interface SignalStore<S extends BaseSignal> {
 ### `HandlerExecutor`
 
 ```typescript
-interface HandlerExecutor<S extends BaseSignal> {
+interface HandlerExecutor<S extends BaseSignal = BaseSignal> {
   execute(handler: AnySignalHandler<S>, signal: S): Promise<void>;
   stats(): { queued: number; processing: number };
 }
@@ -157,7 +157,7 @@ interface HandlerExecutor<S extends BaseSignal> {
 ### `Source`
 
 ```typescript
-interface Source<S extends BaseSignal> {
+interface Source<S extends BaseSignal = BaseSignal> {
   name: string;
   start(emit: (signal: S) => Promise<void>): Promise<void>;
   stop(): Promise<void>;
